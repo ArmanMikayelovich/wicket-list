@@ -1,19 +1,16 @@
 package com.mikayelovich.service.impl;
 
+import com.mikayelovich.model.IssueDto;
 import com.mikayelovich.model.IssueEntity;
 import com.mikayelovich.service.IssueService;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import static com.mikayelovich.model.enums.IssueStatus.*;
+import static com.mikayelovich.util.enums.IssueStatus.*;
 
 public class IssueServiceDummyDaoImpl implements IssueService, Serializable {
     private final Map<Long, IssueEntity> dummyIssues = new HashMap<>();
@@ -35,13 +32,19 @@ public class IssueServiceDummyDaoImpl implements IssueService, Serializable {
     }
 
     @Override
-    public void save(IssueEntity entity) {
-        dummyIssues.put(atomicLong.getAndIncrement(), entity);
+    public void save(IssueDto dto) {
+        long id = atomicLong.getAndIncrement();
+        IssueEntity issueEntity = dtoToEntity(dto);
+        issueEntity.setId(id);
+        dummyIssues.put(id, issueEntity);
     }
 
     @Override
-    public List<IssueEntity> getAll() {
-        return new ArrayList<>(dummyIssues.values());
+    public List<IssueDto> getAll() {
+        return dummyIssues.values().stream()
+                .map(this::entityToDto)
+                .sorted()
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -51,5 +54,24 @@ public class IssueServiceDummyDaoImpl implements IssueService, Serializable {
             throw new RuntimeException("Issue " + issueEntity.getId() + " not found");
         }
         dummyIssues.put(issueEntity.getId(), issueEntity);
+    }
+
+    private IssueEntity dtoToEntity(IssueDto dto) {
+        IssueEntity issueEntity = new IssueEntity();
+        issueEntity.setName(dto.getName());
+        issueEntity.setStatus(dto.getStatus());
+        issueEntity.setSortPlace(dto.getSortPlace());
+        issueEntity.setCreatedAt(dto.getCreatedAt());
+        return issueEntity;
+    }
+
+    private IssueDto entityToDto(IssueEntity entity) {
+        IssueDto issueDto = new IssueDto();
+        issueDto.setId(entity.getId());
+        issueDto.setName(entity.getName());
+        issueDto.setStatus(entity.getStatus());
+        issueDto.setCreatedAt(entity.getCreatedAt());
+        issueDto.setSortPlace(entity.getSortPlace());
+        return issueDto;
     }
 }

@@ -9,6 +9,6 @@ public class HomePage extends WebPage {
 
     public HomePage(final PageParameters parameters) {
         super(parameters);
-        add(new ListPanel("issueList"));
+        add(new ListPanel("issueList").setOutputMarkupId(true));
     }
 }

@@ -1,17 +1,12 @@
 package com.mikayelovich.model;
 
 import com.mikayelovich.util.enums.IssueStatus;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-public class IssueEntity implements Serializable,Comparable<IssueEntity> {
+public class IssueDto implements Serializable,Comparable<IssueDto> {
     private Long id;
 
     private String name;
@@ -19,10 +14,11 @@ public class IssueEntity implements Serializable,Comparable<IssueEntity> {
     private IssueStatus status;
 
     private LocalDateTime createdAt;
+
     private Long sortPlace;
 
     @Override
-    public int compareTo(IssueEntity other) {
+    public int compareTo(IssueDto other) {
         return this.sortPlace.compareTo(other.sortPlace);
     }
 }
