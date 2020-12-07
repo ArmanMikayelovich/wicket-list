@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:wicket="http://wicket.apache.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <wicket:link>
+        <link rel="stylesheet" type="text/css" href="../../../../../webapp/style.css"/>
+    </wicket:link>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <wicket:panel>
+        <a href="#" wicket:id="create">
+            <button>Create new Issue</button>
+        </a>
+        <br/>
+        <table style="width:100%">
+            <tr>
+
+                <th>Actions</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Created at</th>
+            </tr>
+
+            <tr class="td" wicket:id="list">
+                <td>
+                    <div>
+                        <div style="display: inline-block">
+                            <a href="#" wicket:id="upAjaxLink">
+                                <img wicket:id="upIcon" alt="Up"/>
+                            </a>
+                        </div>
+                        <div style="display: inline-block">
+                            <a href="#" wicket:id="downAjaxLink">
+                                <img wicket:id="downIcon" alt="Up"/>
+                            </a>
+                        </div>
+                        <div style="display: inline-block">
+                            <a href="#" wicket:id="deleteAjaxLink">
+                                <img wicket:id="deleteIcon" alt="Up"/>
+                            </a>
+                        </div>
+                        <div style="display: inline-block">
+                            <a href="#" wicket:id="modifyAjaxLink">
+                                <img wicket:id="modifyIcon" alt="Up"/>
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td><span wicket:id="issueName"></span></td>
+                <td><span wicket:id="issueStatus"></span></td>
+                <td><span wicket:id="issueCreatedAt"></span></td>
+            </tr>
+            <tfoot>
+            <tr>
+                <td>
+                    <a href="#" wicket:id="saveChangesLink">
+                        <button>Save Changes</button>
+                    </a>
+                </td>
+
+                <td></td>
+                <td></td>
+
+                <td>
+                    <a href="#" wicket:id="cancelChanges">
+                        <button>Cancel</button>
+                    </a>
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+    </wicket:panel>
+</body>
+</html>
