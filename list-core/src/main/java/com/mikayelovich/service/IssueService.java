@@ -10,7 +10,11 @@ public interface IssueService {
 
     List<IssueDto> getAll();
 
-    void update(IssueEntity issueEntity);
+    void update(IssueDto issueEntity);
+
+    void SyncWithDatabase(List<IssueDto> dtoList);
+
+    void delete(Long id);
 
 
 }

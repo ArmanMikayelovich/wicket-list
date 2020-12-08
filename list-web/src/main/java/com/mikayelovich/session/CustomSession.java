@@ -1,45 +1,38 @@
 package com.mikayelovich.session;
 
 import com.mikayelovich.model.IssueDto;
-import com.mikayelovich.model.IssueEntity;
-import com.mikayelovich.service.IssueService;
-import com.mikayelovich.service.impl.IssueServiceDummyDaoImpl;
 import com.mikayelovich.util.enums.SortActionType;
+import lombok.Getter;
 import org.apache.wicket.protocol.http.WebSession;
 import org.apache.wicket.request.Request;
 
 import java.util.*;
 
-public class CustomSession extends WebSession implements IssueService {
+public class CustomSession extends WebSession {
 
-    private static final IssueService issueService = new IssueServiceDummyDaoImpl();
+    private static final Comparator<IssueDto> comparator = Comparator.comparing(IssueDto::getSortPlace);
 
-    Comparator<IssueDto> comparator = Comparator.comparing(IssueDto::getSortPlace);
-
-
+    @Getter
     private final Set<IssueDto> issues = new TreeSet<>(comparator);
 
     public CustomSession(Request request) {
         super(request);
-        issues.addAll(issueService.getAll());
     }
 
-
-    @Override
-    public void save(IssueDto dto) {
-        issues.add(dto);
-    }
-
-    @Override
     public List<IssueDto> getAll() {
         ArrayList<IssueDto> list = new ArrayList<>(issues);
-        Collections.sort(list);
+        list.sort(comparator);
         return list;
     }
 
-    @Override
-    public void update(IssueEntity issueEntity) {
-        //TODO
+    public void addIssue(IssueDto dto) {
+        Long newSortPlace = issues.stream().map(IssueDto::getSortPlace).max(Long::compare).orElse(0L) + 1L;
+        dto.setSortPlace(newSortPlace);
+        issues.add(dto);
+    }
+
+    public void delete(IssueDto dto) {
+        dto.setDeleted(true);
     }
 
     public void changeSortPlace(IssueDto dto, SortActionType type) {

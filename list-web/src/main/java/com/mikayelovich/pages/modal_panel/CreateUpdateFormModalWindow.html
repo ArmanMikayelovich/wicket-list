@@ -5,15 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-<wicket:panel>
-    <div wicket:id="cont">
-    <form wicket:id="form">
-        <input type="text" wicket:id="text" />
-        <input type="text" wicket:id="status" />
-        <input type="submit" wicket:id="submit" />
+    <wicket:panel>
+        <div wicket:id="content">
+            <form wicket:id="form">
+                <label> Name: &nbsp;&nbsp;
+                    <input type="text" wicket:id="name"/>
+                </label>
+                <label> Status:&nbsp;&nbsp;
+                    <select wicket:id="status"></select>
+                </label>
+                <input type="submit" wicket:id="submit" value="Submit"/>
+                <input type="button" wicket:id="cancel" value="Cancel"/>
 
-    </form>
-    </div>
-</wicket:panel>
+            </form>
+        </div>
+    </wicket:panel>
 </body>
 </html>

@@ -3,22 +3,32 @@ package com.mikayelovich.model;
 import com.mikayelovich.util.enums.IssueStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Generated;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class IssueEntity implements Serializable,Comparable<IssueEntity> {
+@Entity
+@Table(name = "issues")
+public class IssueEntity implements Serializable, Comparable<IssueEntity> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     private IssueStatus status;
 
+    @CreationTimestamp
     private LocalDateTime createdAt;
+    @Column(nullable = false)
     private Long sortPlace;
 
     @Override

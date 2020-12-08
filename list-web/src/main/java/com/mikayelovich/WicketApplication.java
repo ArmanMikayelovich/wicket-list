@@ -38,7 +38,6 @@ public class WicketApplication extends WebApplication {
         //Scan package for annotated beans
         ctx.scan("com.mikayelovich");
         ctx.refresh();
-
         getComponentInstantiationListeners().add(new SpringComponentInjector(this, ctx));
     }
 

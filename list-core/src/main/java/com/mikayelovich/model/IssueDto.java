@@ -17,6 +17,8 @@ public class IssueDto implements Serializable,Comparable<IssueDto> {
 
     private Long sortPlace;
 
+    private boolean isDeleted;
+
     @Override
     public int compareTo(IssueDto other) {
         return this.sortPlace.compareTo(other.sortPlace);

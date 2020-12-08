@@ -52,9 +52,10 @@
 		<junit.version>4.12</junit.version>
 		<spring.version>5.2.0.RELEASE</spring.version>
 		<hibernate.version>5.3.1.Final</hibernate.version>
-		<mysql.version>8.0.22</mysql.version>
+		<mysql.version>5.1.49</mysql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<wtp.version>none</wtp.version>
+		<c3p0.version>0.9.5.2</c3p0.version>
 	</properties>
 	<dependencies>
 		<!--  WICKET DEPENDENCIES -->
@@ -129,6 +130,12 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>com.mchange</groupId>
+			<artifactId>c3p0</artifactId>
+			<version>${c3p0.version}</version>
+		</dependency>
+
 
 
 		<!-- Spring ORM -->
@@ -223,6 +230,16 @@
 		<repository>
 			<id>Apache Nexus</id>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id> ICM repository</id>
+			<url>http://maven.icm.edu.pl/artifactory/repo/</url>
 			<releases>
 				<enabled>false</enabled>
 			</releases>
