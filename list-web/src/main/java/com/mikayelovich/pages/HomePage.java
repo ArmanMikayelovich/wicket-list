@@ -11,7 +11,7 @@ public class HomePage extends WebPage {
 
     public HomePage(final PageParameters parameters) {
         super(parameters);
-        add(new CreateUpdateFormModalWindow("window", new IssueDto()));
+//        add(new CreateUpdateFormModalWindow("window", new IssueDto()));
         add(new ListPanel("issueList").setOutputMarkupId(true));
     }
 }

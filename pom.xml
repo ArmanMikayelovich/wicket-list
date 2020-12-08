@@ -22,9 +22,14 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mikayelovich</groupId>
 	<artifactId>wicket-list</artifactId>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 	<version>1.0-SNAPSHOT</version>
-		<!-- TODO project name  -->
+
+	<modules>
+		<module>list-web</module>
+		<module>list-core</module>
+	</modules>
+	<!-- TODO project name  -->
 	<name>quickstart</name>
 	<description>description</description>
 	<!--
@@ -45,6 +50,9 @@
 		<jetty9.version>9.4.18.v20190429</jetty9.version>
 		<slf4j.version>1.7.25</slf4j.version>
 		<junit.version>4.12</junit.version>
+		<spring.version>5.2.0.RELEASE</spring.version>
+		<hibernate.version>5.3.1.Final</hibernate.version>
+		<mysql.version>8.0.22</mysql.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<wtp.version>none</wtp.version>
 	</properties>
@@ -107,6 +115,36 @@
 			<version>1.18.16</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- MYSQL Dependency -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql.version}</version>
+		</dependency>
+		<!-- Hibernate Core -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+
+		<!-- Spring ORM -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.wicket/wicket-spring -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-spring</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+
 	</dependencies>
 	<build>
 		<resources>
