@@ -5,6 +5,7 @@ import com.mikayelovich.pages.list_panel.ListPanel;
 import com.mikayelovich.pages.modal_panel.CreateUpdateFormModalWindow;
 import com.mikayelovich.service.IssueService;
 import com.mikayelovich.session.CustomSession;
+import lombok.Getter;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -20,6 +21,9 @@ public class HomePage extends WebPage {
     @SpringBean
     private IssueService issueService;
 
+    @Getter
+    private final CreateUpdateFormModalWindow window;
+
     public HomePage(final PageParameters parameters) {
         super(parameters);
 
@@ -28,7 +32,7 @@ public class HomePage extends WebPage {
             sessionIssues.addAll(issueService.getAll());
         }
 
-        CreateUpdateFormModalWindow window = new CreateUpdateFormModalWindow("window");
+        window = new CreateUpdateFormModalWindow("window");
         add(window);
 
 

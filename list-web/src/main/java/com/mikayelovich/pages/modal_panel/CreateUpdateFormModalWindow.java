@@ -27,9 +27,14 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
             .map(IssueStatus::toString).collect(Collectors.toList());
     @Setter
     private IssueDto issueDto;
+//TODO issueDto get Name for setting in form not working.
 
     public CreateUpdateFormModalWindow(String id) {
         super(id);
+        if (issueDto == null) {
+            issueDto = new IssueDto();
+            issueDto.setStatus(IssueStatus.NEW);
+        }
         WebMarkupContainer container = new WebMarkupContainer("content");
         container.setOutputMarkupId(true);
         this.setContent(container);
@@ -37,14 +42,17 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
         container.add(form);
 
         TextField<String> nameField = new TextField<>("name");
-        nameField.add(new AttributeModifier("defaultValue", issueDto.getName()));
+        nameField.add(new AttributeModifier("value", issueDto.getName()));
         form.add(nameField);
-        form.add(new DropDownChoice<>("status", Arrays.asList(IssueStatus.values())));
+
+        DropDownChoice<IssueStatus> status = new DropDownChoice<>("status", Arrays.asList(IssueStatus.values()));
+        status.add(new AttributeModifier("value", issueDto.getStatus().toString()));
+        form.add(status);
         form.add(new AjaxSubmitLink("submit") {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                ((CustomSession)getSession()).addIssue(form.getModelObject());
+                ((CustomSession) getSession()).addIssue(form.getModelObject());
                 CreateUpdateFormModalWindow.this.close(target);
             }
         });

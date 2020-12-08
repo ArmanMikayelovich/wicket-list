@@ -1,6 +1,7 @@
 package com.mikayelovich.pages.list_panel;
 
 import com.mikayelovich.model.IssueDto;
+import com.mikayelovich.pages.modal_panel.CreateUpdateFormModalWindow;
 import com.mikayelovich.session.CustomSession;
 import com.mikayelovich.util.enums.SortActionType;
 import lombok.Getter;
@@ -20,12 +21,15 @@ import org.apache.wicket.model.PropertyModel;
 public class ListPanel extends Panel {
     @Getter
     private final WebMarkupContainer container;
+    private final CreateUpdateFormModalWindow window;
 
     public ListPanel(String id) {
         super(id);
+        window = new CreateUpdateFormModalWindow("window");
         container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
         add(container);
+        add(window);
         CustomSession customSession = (CustomSession) Session.get();
         ListView<IssueDto> listView = getIssueDtoListView(container, customSession);
         container.add(listView);
@@ -116,6 +120,9 @@ public class ListPanel extends Panel {
 
             @Override
             public void onClick(AjaxRequestTarget ajaxRequestTarget) {
+                IssueDto issueDto = model.getObject();
+                window.setIssueDto(issueDto);
+                window.show(ajaxRequestTarget);
                 //TODO modify item
                 ((CustomSession) getSession()).getAll();
                 container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
