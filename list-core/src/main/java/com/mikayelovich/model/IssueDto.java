@@ -11,7 +11,7 @@ public class IssueDto implements Serializable,Comparable<IssueDto> {
 
     private String name;
 
-    private IssueStatus status;
+    private IssueStatus status = IssueStatus.NEW;
 
     private LocalDateTime createdAt;
 

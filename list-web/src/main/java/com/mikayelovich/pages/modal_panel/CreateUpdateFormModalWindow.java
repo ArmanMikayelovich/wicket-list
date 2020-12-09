@@ -23,18 +23,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CreateUpdateFormModalWindow extends ModalWindow {
-    private static final List<String> selectOptions = Arrays.stream(IssueStatus.values())
-            .map(IssueStatus::toString).collect(Collectors.toList());
-    @Setter
-    private IssueDto issueDto;
-//TODO issueDto get Name for setting in form not working.
 
-    public CreateUpdateFormModalWindow(String id) {
+    public CreateUpdateFormModalWindow(String id, IssueDto issueDto) {
         super(id);
-        if (issueDto == null) {
-            issueDto = new IssueDto();
-            issueDto.setStatus(IssueStatus.NEW);
-        }
+        this.setOutputMarkupId(true);
         WebMarkupContainer container = new WebMarkupContainer("content");
         container.setOutputMarkupId(true);
         this.setContent(container);
@@ -52,7 +44,10 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
-                ((CustomSession) getSession()).addIssue(form.getModelObject());
+                IssueDto issueDto = form.getModelObject();
+                if (issueDto.getId() == null) {
+                    ((CustomSession) getSession()).addIssue(form.getModelObject());
+                }
                 CreateUpdateFormModalWindow.this.close(target);
             }
         });
@@ -60,6 +55,7 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
             @Override
             protected void onSubmit(AjaxRequestTarget target) {
                 System.out.println("Canceled");
+                CreateUpdateFormModalWindow.this.close(target);
             }
         });
     }

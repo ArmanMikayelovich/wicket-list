@@ -32,7 +32,7 @@ public class HomePage extends WebPage {
             sessionIssues.addAll(issueService.getAll());
         }
 
-        window = new CreateUpdateFormModalWindow("window");
+        window = new CreateUpdateFormModalWindow("window",new IssueDto());
         add(window);
 
 

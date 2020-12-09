@@ -21,11 +21,12 @@ import org.apache.wicket.model.PropertyModel;
 public class ListPanel extends Panel {
     @Getter
     private final WebMarkupContainer container;
-    private final CreateUpdateFormModalWindow window;
+    private CreateUpdateFormModalWindow window;
 
     public ListPanel(String id) {
         super(id);
-        window = new CreateUpdateFormModalWindow("window");
+        window = new CreateUpdateFormModalWindow("window", new IssueDto());
+        window.setOutputMarkupId(true);
         container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
         add(container);
@@ -109,7 +110,7 @@ public class ListPanel extends Panel {
             @Override
             public void onClick(AjaxRequestTarget ajaxRequestTarget) {
                 ((CustomSession) getSession()).delete(model.getObject());
-                ((CustomSession) getSession()).getAll();
+//                ((CustomSession) getSession()).getAll();
                 container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
                 ajaxRequestTarget.add(container);
             }
@@ -121,12 +122,13 @@ public class ListPanel extends Panel {
             @Override
             public void onClick(AjaxRequestTarget ajaxRequestTarget) {
                 IssueDto issueDto = model.getObject();
-                window.setIssueDto(issueDto);
+                window = new CreateUpdateFormModalWindow("window", issueDto);
+                ListPanel.this.addOrReplace(window);
                 window.show(ajaxRequestTarget);
                 //TODO modify item
-                ((CustomSession) getSession()).getAll();
+               /* ((CustomSession) getSession()).getAll();
                 container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
-                ajaxRequestTarget.add(container);
+                ajaxRequestTarget.add(container);*/
             }
         };
         modifyAjaxLink.add(modifyIcon);

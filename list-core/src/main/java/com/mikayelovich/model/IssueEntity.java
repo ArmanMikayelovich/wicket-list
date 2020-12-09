@@ -24,7 +24,7 @@ public class IssueEntity implements Serializable, Comparable<IssueEntity> {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private IssueStatus status;
+    private IssueStatus status = IssueStatus.NEW;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
