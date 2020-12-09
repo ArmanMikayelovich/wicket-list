@@ -23,7 +23,9 @@ public class HomePage extends WebPage {
     @SpringBean
     private IssueService issueService;
 
-    ListPanel issueList = null;
+
+
+    private WebMarkupContainer container;
 
     @Getter
     private CreateUpdateFormModalWindow window;
@@ -38,9 +40,12 @@ public class HomePage extends WebPage {
             sessionIssues.addAll(issueService.getAll());
         }
 
+        container = new WebMarkupContainer("container");
+        container.setOutputMarkupId(true);
 
         ListPanel issueList = new ListPanel("issueList");
-        add(issueList);
+        container.add(issueList);
+        add(container);
         add(new AjaxLink<Void>("create") {
             @Override
             public void onClick(AjaxRequestTarget target) {
@@ -69,9 +74,9 @@ public class HomePage extends WebPage {
             public void onClick(AjaxRequestTarget target) {
                 List<IssueDto> issuesFromDB = issueService.getAll();
                 ((CustomSession) getSession()).refreshIssues(issuesFromDB);
-                HomePage.this.issueList = new ListPanel("issueList");
-                HomePage.this.addOrReplace(issueList);
-                target.add(issueList);
+                issueList.getContainer().addOrReplace(issueList.getIssueDtoListView(
+                        issueList.getContainer(), (CustomSession) getSession()));
+                target.add(issueList.getContainer());
             }
         });
     }

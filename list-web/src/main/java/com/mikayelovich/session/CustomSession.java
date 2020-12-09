@@ -45,27 +45,7 @@ public class CustomSession extends WebSession {
         dto.setDeleted(true);
     }
 
-    /*public void changeSortPlace(IssueDto dto, SortActionType type) {
-        Long initialSortPlace = dto.getSortPlace();
-        int sortDirectionNumber = type == SortActionType.UP ? -1 : 1;
-        long relatedIssueSortPlace = dto.getSortPlace() + sortDirectionNumber;
 
-        IssueDto relatedIssueDto = null;
-
-        for (IssueDto issueDto : issues) {
-            if (issueDto.getSortPlace() != null
-                    && issueDto.getSortPlace().equals(relatedIssueSortPlace)) {
-                relatedIssueDto = issueDto;
-                break;
-            }
-        }
-        if (relatedIssueDto == null) {
-            return;
-        }
-
-        relatedIssueDto.setSortPlace(initialSortPlace);
-        dto.setSortPlace(relatedIssueSortPlace);
-    }*/
 
     public void changeSortPlace(IssueDto dto, SortActionType sortActionType) {
         Long initialSortPlace = dto.getSortPlace();
@@ -87,7 +67,6 @@ public class CustomSession extends WebSession {
         } else {
             issueDtoStream.max(IssueDto::compareTo).ifPresent(reverseSortPlace);
         }
-
     }
 
 }
