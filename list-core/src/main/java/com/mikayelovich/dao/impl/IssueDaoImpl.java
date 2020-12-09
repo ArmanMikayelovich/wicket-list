@@ -1,7 +1,7 @@
 package com.mikayelovich.dao.impl;
 
 import com.mikayelovich.dao.IssueDao;
-import com.mikayelovich.model.IssueDto;
+
 import com.mikayelovich.model.IssueEntity;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

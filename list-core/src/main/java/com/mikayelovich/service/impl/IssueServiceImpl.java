@@ -5,19 +5,18 @@ import com.mikayelovich.model.IssueDto;
 import com.mikayelovich.model.IssueEntity;
 import com.mikayelovich.service.IssueService;
 import com.mikayelovich.util.enums.Mapper;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.ManagedBean;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service("issueService")
 @Transactional(readOnly = true)
-@ManagedBean
-public class IssueServiceImpl implements IssueService {
+public class IssueServiceImpl implements IssueService{
     private final IssueDao issueDao;
 
     public IssueServiceImpl(IssueDao issueDao) {
@@ -58,7 +57,7 @@ public class IssueServiceImpl implements IssueService {
                 save(issueDTO);
 
             } else if (issueDTO.isDeleted()) {
-                issueDao.delete(issueDTO.getId());
+                delete(issueDTO.getId());
             } else {
                 update(issueDTO);
             }
@@ -66,6 +65,7 @@ public class IssueServiceImpl implements IssueService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         issueDao.delete(id);
     }

@@ -1,7 +1,7 @@
 package com.mikayelovich.service;
 
 import com.mikayelovich.model.IssueDto;
-import com.mikayelovich.model.IssueEntity;
+
 
 import java.util.List;
 

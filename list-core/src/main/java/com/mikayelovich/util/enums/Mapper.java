@@ -4,6 +4,8 @@ import com.mikayelovich.model.IssueDto;
 import com.mikayelovich.model.IssueEntity;
 
 public class Mapper {
+    private Mapper() {
+    }
 
     public static IssueEntity dtoToEntity(IssueDto dto) {
         IssueEntity issueEntity = new IssueEntity();

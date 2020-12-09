@@ -21,7 +21,7 @@ public class HomePage extends WebPage {
     private static final long serialVersionUID = 1L;
 
     @SpringBean
-    private IssueService issueService;
+    private transient IssueService issueService;
 
 
 

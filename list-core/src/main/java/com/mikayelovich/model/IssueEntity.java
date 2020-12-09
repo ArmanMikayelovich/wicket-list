@@ -3,7 +3,7 @@ package com.mikayelovich.model;
 import com.mikayelovich.util.enums.IssueStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Generated;
+
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 

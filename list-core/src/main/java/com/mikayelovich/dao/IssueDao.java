@@ -1,6 +1,6 @@
 package com.mikayelovich.dao;
 
-import com.mikayelovich.model.IssueDto;
+
 import com.mikayelovich.model.IssueEntity;
 
 import java.util.List;
