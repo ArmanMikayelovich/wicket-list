@@ -23,4 +23,6 @@ public class IssueDto implements Serializable,Comparable<IssueDto> {
     public int compareTo(IssueDto other) {
         return this.sortPlace.compareTo(other.sortPlace);
     }
+
+
 }

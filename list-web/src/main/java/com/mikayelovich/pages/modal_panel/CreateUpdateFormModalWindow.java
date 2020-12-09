@@ -1,6 +1,7 @@
 package com.mikayelovich.pages.modal_panel;
 
 import com.mikayelovich.model.IssueDto;
+import com.mikayelovich.pages.list_panel.ListPanel;
 import com.mikayelovich.session.CustomSession;
 import com.mikayelovich.util.enums.IssueStatus;
 import lombok.Setter;
@@ -24,7 +25,8 @@ import java.util.stream.Collectors;
 
 public class CreateUpdateFormModalWindow extends ModalWindow {
 
-    public CreateUpdateFormModalWindow(String id, IssueDto issueDto) {
+    private boolean willUpdate = false;
+    public CreateUpdateFormModalWindow(String id, ListPanel issueList, IssueDto issueDto) {
         super(id);
         this.setOutputMarkupId(true);
         WebMarkupContainer container = new WebMarkupContainer("content");
@@ -48,6 +50,7 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
                 if (issueDto.getId() == null) {
                     ((CustomSession) getSession()).addIssue(form.getModelObject());
                 }
+                willUpdate = true;
                 CreateUpdateFormModalWindow.this.close(target);
             }
         });
@@ -56,6 +59,14 @@ public class CreateUpdateFormModalWindow extends ModalWindow {
             protected void onSubmit(AjaxRequestTarget target) {
                 System.out.println("Canceled");
                 CreateUpdateFormModalWindow.this.close(target);
+            }
+        });
+
+        this.setWindowClosedCallback((ModalWindow.WindowClosedCallback) target -> {
+            if (willUpdate) {
+                issueList.getContainer().addOrReplace(issueList.getIssueDtoListView(
+                        issueList.getContainer(), (CustomSession) getSession()));
+                target.add(issueList.getContainer());
             }
         });
     }

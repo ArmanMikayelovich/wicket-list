@@ -51,7 +51,7 @@ public class IssueServiceImpl implements IssueService {
 
     @Override
     @Transactional
-    public void SyncWithDatabase(List<IssueDto> dtoList) {
+    public void syncWithDatabase(List<IssueDto> dtoList) {
         dtoList.forEach(issueDTO -> {
 
             if (issueDTO.getId() == null) {

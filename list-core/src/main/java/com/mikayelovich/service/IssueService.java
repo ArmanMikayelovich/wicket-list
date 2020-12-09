@@ -12,7 +12,7 @@ public interface IssueService {
 
     void update(IssueDto issueEntity);
 
-    void SyncWithDatabase(List<IssueDto> dtoList);
+    void syncWithDatabase(List<IssueDto> dtoList);
 
     void delete(Long id);
 
