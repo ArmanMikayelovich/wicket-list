@@ -44,5 +44,4 @@ public class WicketApplication extends WebApplication {
         return new CustomSession(request);
     }
 
-
 }

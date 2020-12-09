@@ -3,23 +3,34 @@ package com.mikayelovich.pages.list_panel;
 import com.mikayelovich.model.IssueDto;
 import com.mikayelovich.pages.modal_panel.CreateUpdateFormModalWindow;
 import com.mikayelovich.session.CustomSession;
+import com.mikayelovich.util.Filter;
 import com.mikayelovich.util.enums.SortActionType;
 import lombok.Getter;
 import org.apache.wicket.Component;
 import org.apache.wicket.Session;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.ajax.markup.html.form.AjaxSubmitLink;
+import org.apache.wicket.extensions.markup.html.form.datetime.LocalDateTextField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-public class ListPanel extends Panel {
+import java.util.Arrays;
+import java.util.List;
 
+public class ListPanel extends Panel {
     @Getter
     private final WebMarkupContainer container;
     private CreateUpdateFormModalWindow window;
@@ -37,6 +48,31 @@ public class ListPanel extends Panel {
         ListView<IssueDto> listView = getIssueDtoListView(container, customSession);
         container.add(listView);
 
+
+        container.add(getFilter());
+
+    }
+
+    private Form<Filter> getFilter() {
+
+        Model<Filter> filterModel = new Model<>(new Filter());
+        Form<Filter> filterForm = new Form<>("filterForm", filterModel);
+        TextField<String> name = new TextField<>("name",new PropertyModel<>(filterModel,"name"));
+        Component date = new LocalDateTextField("date","yyyy-MM-dd");
+
+        DropDownChoice statusChoise = new DropDownChoice("status", Filter.selectOptions);
+        filterForm.add(name);
+        filterForm.add(date);
+        filterForm.add(statusChoise);
+        filterForm.add(new AjaxButton("submit") {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target) {
+                super.onSubmit(target);
+                System.out.println();
+            }
+        });
+        filterForm.setOutputMarkupId(true);
+        return filterForm;
     }
 
     public ListView<IssueDto> getIssueDtoListView(WebMarkupContainer container, CustomSession customSession) {
@@ -50,7 +86,7 @@ public class ListPanel extends Panel {
                     listItem.setVisible(false);
                 }
 
-                listItem.add(addUpDownModifyDeleteActions(listItem.getModel(), container));
+                listItem.add(addUpDownModifyDeleteActions(listItem.getModel()));
 
                 listItem.add(new Label("issueName", new PropertyModel<>(issue, "name")));
                 listItem.add(new Label("issueStatus", new PropertyModel<>(issue, "status")));
@@ -61,7 +97,7 @@ public class ListPanel extends Panel {
         return issueDtoListView;
     }
 
-    private Component[] addUpDownModifyDeleteActions(IModel<IssueDto> model, WebMarkupContainer container) {
+    private Component[] addUpDownModifyDeleteActions(IModel<IssueDto> model) {
 
         Image upIcon = new Image("upIcon", "up.png");
         Image downIcon = new Image("downIcon", "down.png");
@@ -74,10 +110,11 @@ public class ListPanel extends Panel {
                 IssueDto issueDto = model.getObject();
                 ((CustomSession) getSession()).changeSortPlace(issueDto, SortActionType.UP);
 
-                container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
-                ajaxRequestTarget.add(container);
+                updateListContentForUser(ajaxRequestTarget);
 
             }
+
+
         };
         upAjaxLink.add(upIcon);
 
@@ -87,8 +124,7 @@ public class ListPanel extends Panel {
             public void onClick(AjaxRequestTarget ajaxRequestTarget) {
                 IssueDto issueDto = model.getObject();
                 ((CustomSession) getSession()).changeSortPlace(issueDto, SortActionType.DOWN);
-                container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
-                ajaxRequestTarget.add(container);
+                updateListContentForUser(ajaxRequestTarget);
             }
         };
         downAjaxLink.add(downIcon);
@@ -98,8 +134,7 @@ public class ListPanel extends Panel {
             @Override
             public void onClick(AjaxRequestTarget ajaxRequestTarget) {
                 ((CustomSession) getSession()).delete(model.getObject());
-                container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
-                ajaxRequestTarget.add(container);
+                updateListContentForUser(ajaxRequestTarget);
             }
         };
         deleteAjaxLink.add(deleteIcon);
@@ -119,5 +154,9 @@ public class ListPanel extends Panel {
         return new Component[]{upAjaxLink, downAjaxLink, deleteAjaxLink, modifyAjaxLink};
     }
 
+    private void updateListContentForUser(AjaxRequestTarget ajaxRequestTarget) {
+        container.addOrReplace(getIssueDtoListView(container, (CustomSession) getSession()));
+        ajaxRequestTarget.add(container);
+    }
 
 }

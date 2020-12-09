@@ -12,47 +12,65 @@
         <div wicket:id="window"></div>
         <div wicket:id="container">
 
-        <br/>
-        <table style="width:100%">
-            <tr>
+            <br/>
 
-                <th>Actions</th>
-                <th>Name</th>
-                <th>Status</th>
-                <th>Created at</th>
-            </tr>
+            <div >
+                <form wicket:id="filterForm">
+                    <label>Name: &nbsp;&nbsp;
+                        <input type="text" name="name" wicket:id="name"/>
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>Status:&nbsp;&nbsp;
+                        <select name="name" wicket:id="status"> </select>
+                    </label>
+                    &nbsp;&nbsp;
+                    <label>Date: &nbsp;&nbsp;
+                        <input type="text"  name="date" wicket:id="date"/>
+                    </label>
+                    <input type="submit" value="Filter" wicket:id="submit">
+                </form>
+            </div>
 
-            <tr class="td" wicket:id="list">
-                <td>
-                    <div>
-                        <div style="display: inline-block">
-                            <a href="#" wicket:id="upAjaxLink">
-                                <img wicket:id="upIcon" alt="Up"/>
-                            </a>
-                        </div>
-                        <div style="display: inline-block">
-                            <a href="#" wicket:id="downAjaxLink">
-                                <img wicket:id="downIcon" alt="Down"/>
-                            </a>
-                        </div>
-                        <div style="display: inline-block">
-                            <a href="#" wicket:id="deleteAjaxLink">
-                                <img wicket:id="deleteIcon" alt="Delete"/>
-                            </a>
-                        </div>
-                        <div style="display: inline-block">
-                            <a href="#" wicket:id="modifyAjaxLink">
-                                <img wicket:id="modifyIcon" alt="Modify"/>
-                            </a>
-                        </div>
-                    </div>
-                </td>
-                <td><span wicket:id="issueName"></span></td>
-                <td><span wicket:id="issueStatus"></span></td>
-                <td><span wicket:id="issueCreatedAt"></span></td>
-            </tr>
+            <table style="width:100%">
+                <tr>
 
-        </table>
+                    <th>Actions</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Created at</th>
+                </tr>
+
+                <tr class="td" wicket:id="list">
+                    <td>
+                        <div>
+                            <div style="display: inline-block">
+                                <a href="#" wicket:id="upAjaxLink">
+                                    <img wicket:id="upIcon" alt="Up"/>
+                                </a>
+                            </div>
+                            <div style="display: inline-block">
+                                <a href="#" wicket:id="downAjaxLink">
+                                    <img wicket:id="downIcon" alt="Down"/>
+                                </a>
+                            </div>
+                            <div style="display: inline-block">
+                                <a href="#" wicket:id="deleteAjaxLink">
+                                    <img wicket:id="deleteIcon" alt="Delete"/>
+                                </a>
+                            </div>
+                            <div style="display: inline-block">
+                                <a href="#" wicket:id="modifyAjaxLink">
+                                    <img wicket:id="modifyIcon" alt="Modify"/>
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td><span wicket:id="issueName"></span></td>
+                    <td><span wicket:id="issueStatus"></span></td>
+                    <td><span wicket:id="issueCreatedAt"></span></td>
+                </tr>
+
+            </table>
         </div>
     </wicket:panel>
 </body>

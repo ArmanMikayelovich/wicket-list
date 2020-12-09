@@ -56,6 +56,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<wtp.version>none</wtp.version>
 		<c3p0.version>0.9.5.2</c3p0.version>
+		<wicket.datetime.version>8.0.0-M7</wicket.datetime.version>
 	</properties>
 	<dependencies>
 		<!--  WICKET DEPENDENCIES -->
@@ -149,6 +150,12 @@
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-spring</artifactId>
 			<version>${wicket.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.wicket/wicket-datetime -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-datetime</artifactId>
+			<version>${wicket.datetime.version}</version>
 		</dependency>
 
 
